@@ -167,6 +167,8 @@ if [[ -n $looks ]]; then
   IFS=',' read -r -a requested_looks <<< "$looks"
   for kind in ${devices[@]+"${devices[@]}"}; do
     for look in ${requested_looks[@]+"${requested_looks[@]}"}; do
+      look=${look//[[:space:]]/}
+      if [[ -z $look ]]; then continue; fi
       if [[ ! -f "$output/${kind}-${look}-summary.txt" ]]; then
         echo "No summary for requested look ${look} on ${kind}" >&2
         failed=1
