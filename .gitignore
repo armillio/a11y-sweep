@@ -1,0 +1,4 @@
+.build/
+.swiftpm/
+*.xcresult
+.a11y-sweep/
