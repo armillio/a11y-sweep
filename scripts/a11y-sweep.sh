@@ -161,6 +161,20 @@ for kind in ${devices[@]+"${devices[@]}"}; do
   done
 done
 
+# Each requested look belongs to one host-setting group, so after all groups ran every
+# requested look must have a summary per device. A typo or a silently skipped look fails.
+if [[ -n $looks ]]; then
+  IFS=',' read -r -a requested_looks <<< "$looks"
+  for kind in ${devices[@]+"${devices[@]}"}; do
+    for look in ${requested_looks[@]+"${requested_looks[@]}"}; do
+      if [[ ! -f "$output/${kind}-${look}-summary.txt" ]]; then
+        echo "No summary for requested look ${look} on ${kind}" >&2
+        failed=1
+      fi
+    done
+  done
+fi
+
 for summary in "$output"/*-summary.txt; do
   if [[ -f $summary ]]; then cat "$summary"; fi
 done
