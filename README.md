@@ -4,7 +4,7 @@ A test-only Swift package for sweeping an iOS app's screens in XCUITest. Each lo
 
 ## Status
 
-Verified on iPhone 16 with iOS 18.6. Xcode 15 or later is required. iPad is unverified and is known not to work with the iPadOS floating, paginated tab bar; apps must supply their own iPad routes. Landscape routes depend on the app.
+Verified on iPhone 16 and iPad Air 11-inch (M3) with iOS 18.6. Xcode 15 or later is required. Routes are the app's, and iPad needs its own handling. The iPadOS 18 floating tab bar paginates and never reports a selected tab, so a route should confirm arrival by something on the destination screen (a title or an identifier), not by the tab's `isSelected`. In landscape the sidebar is visible, so match Edit, Cancel and Done outside the sidebar's own controls. Landscape routes in general depend on the app.
 
 ## Checks and limits
 
