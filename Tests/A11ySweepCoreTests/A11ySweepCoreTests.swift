@@ -77,4 +77,26 @@ final class A11ySweepCoreTests: XCTestCase {
                           text.range(of: "second: zeta")!.lowerBound)
         XCTAssertEqual(summary.failingLines, ["  first: alpha", "  second: zeta", "  second: other"])
     }
+
+    func testScrollContainerPrefersAnOverlappingContainer() {
+        let content = CGRect(x: 300, y: 0, width: 900, height: 800)
+        let chips = CGRect(x: 300, y: 100, width: 900, height: 50)
+        XCTAssertEqual(SweepGeometry.scrollContainerIndex(
+            for: CGRect(x: 400, y: 110, width: 80, height: 30), among: [content, chips]), 1)
+    }
+
+    func testScrollContainerForAnOffscreenTargetSkipsTheSidebar() {
+        let sidebar = CGRect(x: 0, y: 0, width: 300, height: 800)
+        let content = CGRect(x: 300, y: 400, width: 900, height: 400)
+        XCTAssertEqual(SweepGeometry.scrollContainerIndex(
+            for: CGRect(x: 800, y: 1500, width: 120, height: 60), among: [sidebar, content]), 1)
+    }
+
+    func testScrollContainerFallsBackToTheLargest() {
+        let small = CGRect(x: 0, y: 0, width: 100, height: 100)
+        let large = CGRect(x: 0, y: 0, width: 400, height: 400)
+        XCTAssertEqual(SweepGeometry.scrollContainerIndex(
+            for: CGRect(x: 600, y: 900, width: 50, height: 50), among: [small, large]), 1)
+        XCTAssertNil(SweepGeometry.scrollContainerIndex(for: .zero, among: []))
+    }
 }

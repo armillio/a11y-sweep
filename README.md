@@ -10,7 +10,7 @@ Verified on iPhone 16 and iPad Air 11-inch (M3) with iOS 18.6. Xcode 15 or later
 
 - Apple's accessibility audit checks contrast, hit regions, element descriptions, dynamic type, clipping, and other supported types. Text-clipped findings are report-only by default because the audit can flag fully visible labels and miss truncation.
 - OCR compares visible control text with accessibility labels. It is report-only by default because recognition is uncertain. Set `LabelInNameCheck(severity: .fail)` if appropriate for your app.
-- Decisive actions named by the app must exist and remain hittable after scrolling.
+- Decisive actions named by the app must exist and remain hittable after scrolling. The check scrolls the content in the action's own column in short drags that leave no momentum, so a short visible window (landscape at a large text size) cannot be skipped.
 
 This does not test real VoiceOver focus order or speech, Switch Control, Voice Control by voice, Reduce Motion or Reduce Transparency system settings, or Apple Watch. These need a device or a service with assistive-technology users such as Fable, or real-device screen-reader automation such as BrowserStack/TestMu AI.
 
